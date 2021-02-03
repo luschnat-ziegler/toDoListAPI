@@ -20,7 +20,7 @@ const (
 	collectionName = "lists"
 )
 
-func ConnectDbClient() error {
+func connectDbClient() error {
 
 	url, _ := os.LookupEnv("DB_URL")
 	ctx, cancel = context.WithTimeout(context.Background(), 5*time.Second)
