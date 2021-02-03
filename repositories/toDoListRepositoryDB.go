@@ -156,3 +156,7 @@ func (toDoListRepositoryDB ToDoListRepositoryDB) DeleteOneById(id string) (*int6
 
 	return &result.DeletedCount, nil
 }
+
+func NewToDoListRepositoryDB() ToDoListRepositoryDB {
+	return ToDoListRepositoryDB{}
+}
