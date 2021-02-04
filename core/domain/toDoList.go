@@ -28,6 +28,10 @@ func (toDoList *ToDoList) AssignTaskIDs() {
 	}
 }
 
+func (toDoList *ToDoList) ResetID() {
+	toDoList.Id = primitive.ObjectID{}
+}
+
 func (toDoList ToDoList) Validate() *errs.ValidationError {
 	v := validator.New()
 

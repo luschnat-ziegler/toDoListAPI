@@ -27,6 +27,7 @@ func (defaultToDoListService DefaultToDoListService) GetOneListById(id string) (
 }
 
 func (defaultToDoListService DefaultToDoListService) UpdateOneListById(id string, newList domain.ToDoList) (*domain.ToDoList, *errs.AppError) {
+	newList.ResetID()
 	newList.AssignTaskIDs()
 	list, err := defaultToDoListService.repo.UpdateOneById(id, newList)
 	if err != nil {
@@ -36,6 +37,7 @@ func (defaultToDoListService DefaultToDoListService) UpdateOneListById(id string
 }
 
 func (defaultToDoListService DefaultToDoListService) SaveList(newList domain.ToDoList) (*domain.ToDoList, *errs.AppError) {
+	newList.ResetID()
 	newList.AssignTaskIDs()
 	list, err := defaultToDoListService.repo.Save(newList)
 	if err != nil {
