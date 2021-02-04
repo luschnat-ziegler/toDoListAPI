@@ -126,10 +126,10 @@ func (toDoListRepositoryDB ToDoListRepositoryDB) Save(newList domain.ToDoList) (
 }
 
 
-func (toDoListRepositoryDB ToDoListRepositoryDB) DeleteOneById(id string) (*int64, *errs.AppError) {
+func (toDoListRepositoryDB ToDoListRepositoryDB) DeleteOneById(id string) *errs.AppError {
 	if err := connectDbClient(); err != nil {
 		logger.Error("Error connecting to database: " + err.Error())
-		return nil, errs.NewInternalError("Database Error")
+		return errs.NewInternalError("Database Error")
 	}
 	defer disconnectClient(client, ctx)
 	defer cancel()
@@ -137,22 +137,20 @@ func (toDoListRepositoryDB ToDoListRepositoryDB) DeleteOneById(id string) (*int6
 	objectId, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
 		logger.Error("Error parsing id: " + err.Error())
-		return nil, errs.NewInternalError("Database Error")
+		return errs.NewInternalError("Database Error")
 	}
-
-	collection := client.Database(dbName).Collection(collectionName)
 
 	result, err := collection.DeleteOne(ctx, bson.M{"_id": objectId})
 	if err != nil {
 		logger.Error("Error querying database: " + err.Error())
-		return nil, errs.NewInternalError("Database error")
+		return errs.NewInternalError("Database error")
 	}
 
 	if result.DeletedCount == 0 {
-		return nil, errs.NewNotFoundError("No Documents matching ID " + id)
+		return errs.NewNotFoundError("No Documents matching ID " + id)
 	}
 
-	return &result.DeletedCount, nil
+	return nil
 }
 
 func NewToDoListRepositoryDB() ToDoListRepositoryDB {

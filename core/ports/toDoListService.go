@@ -11,5 +11,5 @@ type ToDoListService interface {
 	GetOneListById(string) (*domain.ToDoList, *errs.AppError)
 	UpdateOneListById(string, domain.ToDoList) (*domain.ToDoList, *errs.AppError)
 	SaveList(domain.ToDoList) (*domain.ToDoList, *errs.AppError)
-	DeleteList(string) (*int64, *errs.AppError)
+	DeleteList(string) *errs.AppError
 }

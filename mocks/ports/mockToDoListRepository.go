@@ -35,12 +35,11 @@ func (m *MockToDoListRepository) EXPECT() *MockToDoListRepositoryMockRecorder {
 }
 
 // DeleteOneById mocks base method
-func (m *MockToDoListRepository) DeleteOneById(arg0 string) (*int64, *errs.AppError) {
+func (m *MockToDoListRepository) DeleteOneById(arg0 string) *errs.AppError {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "DeleteOneById", arg0)
-	ret0, _ := ret[0].(*int64)
-	ret1, _ := ret[1].(*errs.AppError)
-	return ret0, ret1
+	ret0, _ := ret[0].(*errs.AppError)
+	return ret0
 }
 
 // DeleteOneById indicates an expected call of DeleteOneById

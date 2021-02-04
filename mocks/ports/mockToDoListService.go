@@ -35,12 +35,11 @@ func (m *MockToDoListService) EXPECT() *MockToDoListServiceMockRecorder {
 }
 
 // DeleteList mocks base method
-func (m *MockToDoListService) DeleteList(arg0 string) (*int64, *errs.AppError) {
+func (m *MockToDoListService) DeleteList(arg0 string) *errs.AppError {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "DeleteList", arg0)
-	ret0, _ := ret[0].(*int64)
-	ret1, _ := ret[1].(*errs.AppError)
-	return ret0, ret1
+	ret0, _ := ret[0].(*errs.AppError)
+	return ret0
 }
 
 // DeleteList indicates an expected call of DeleteList

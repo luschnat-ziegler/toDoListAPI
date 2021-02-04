@@ -10,5 +10,5 @@ type ToDoListRepository interface {
 	GetOneById(string) (*domain.ToDoList, *errs.AppError)
 	UpdateOneById(string, domain.ToDoList) (*domain.ToDoList, *errs.AppError)
 	Save(domain.ToDoList) (*domain.ToDoList, *errs.AppError)
-	DeleteOneById(string) (*int64, *errs.AppError)
+	DeleteOneById(string) *errs.AppError
 }

@@ -46,12 +46,12 @@ func (defaultToDoListService DefaultToDoListService) SaveList(newList domain.ToD
 	return list, nil
 }
 
-func (defaultToDoListService DefaultToDoListService) DeleteList(id string) (*int64, *errs.AppError) {
-	res, err := defaultToDoListService.repo.DeleteOneById(id)
+func (defaultToDoListService DefaultToDoListService) DeleteList(id string) *errs.AppError {
+	err := defaultToDoListService.repo.DeleteOneById(id)
 	if err != nil {
-		return nil, err
+		return err
 	}
-	return res, nil
+	return nil
 }
 
 func NewToDoListService(repo ports.ToDoListRepository) DefaultToDoListService {

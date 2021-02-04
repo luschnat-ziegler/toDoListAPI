@@ -64,7 +64,7 @@ func (ah *ToDoListHandlers) Delete(w http.ResponseWriter, r *http.Request) {
 
 	id := mux.Vars(r)["id"]
 
-	_, appErr := ah.Service.DeleteList(id)
+	appErr := ah.Service.DeleteList(id)
 	if appErr != nil {
 		writeResponse(w, appErr.Code, appErr.AsMessage())
 		return
