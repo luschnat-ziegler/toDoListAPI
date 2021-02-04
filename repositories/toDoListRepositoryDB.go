@@ -115,9 +115,7 @@ func (toDoListRepositoryDB ToDoListRepositoryDB) Save(newList domain.ToDoList) (
 	defer disconnectClient(client, ctx)
 	defer cancel()
 
-	var newToDoList domain.ToDoList
-
-	result, err := collection.InsertOne(ctx, newToDoList)
+	result, err := collection.InsertOne(ctx, newList)
 	if err != nil {
 		logger.Error("Error querying database: " + err.Error())
 		return nil, errs.NewUnexpectedError("Database error")
