@@ -64,13 +64,12 @@ func (ah *ToDoListHandlers) Delete(w http.ResponseWriter, r *http.Request) {
 
 	id := mux.Vars(r)["id"]
 
-	result, appErr := ah.Service.DeleteList(id)
+	_, appErr := ah.Service.DeleteList(id)
 	if appErr != nil {
 		writeResponse(w, appErr.Code, appErr.AsMessage())
 		return
 	}
-
-	writeResponse(w, http.StatusOK, result)
+	w.WriteHeader(http.StatusNoContent)
 }
 
 func (ah *ToDoListHandlers) Update(w http.ResponseWriter, r *http.Request) {

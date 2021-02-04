@@ -20,17 +20,10 @@ func NewNotFoundError(message string) *AppError {
 	}
 }
 
-func NewUnexpectedError(message string) *AppError {
+func NewInternalError(message string) *AppError {
 	return &AppError{
 		Message: message,
 		Code:    http.StatusInternalServerError,
-	}
-}
-
-func NewConflictError(message string) *AppError {
-	return &AppError{
-		Message: message,
-		Code:    http.StatusConflict,
 	}
 }
 
