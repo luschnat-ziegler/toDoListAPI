@@ -23,8 +23,8 @@ func Start() {
 	router.HandleFunc("/todos", th.GetAll).Methods(http.MethodGet)
 	router.HandleFunc("/todos", th.Save).Methods(http.MethodPost)
 	router.HandleFunc("/todos/{id}", th.GetOne).Methods(http.MethodGet)
-	router.HandleFunc("/todos/{id}", th.Delete).Methods(http.MethodDelete)
 	router.HandleFunc("/todos/{id}", th.Update).Methods(http.MethodPut)
+	router.HandleFunc("/todos/{id}", th.Delete).Methods(http.MethodDelete)
 
 	log.Fatal(http.ListenAndServe(":8000", router))
 }

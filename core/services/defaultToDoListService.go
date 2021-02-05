@@ -18,6 +18,16 @@ func (defaultToDoListService DefaultToDoListService) GetAllLists() (*[]domain.To
 	return lists, nil
 }
 
+func (defaultToDoListService DefaultToDoListService) SaveList(newList domain.ToDoList) (*domain.ToDoList, *errs.AppError) {
+	newList.ResetID()
+	newList.AssignTaskIDs()
+	list, err := defaultToDoListService.repo.Save(newList)
+	if err != nil {
+		return nil, err
+	}
+	return list, nil
+}
+
 func (defaultToDoListService DefaultToDoListService) GetOneListById(id string) (*domain.ToDoList, *errs.AppError) {
 	list, err := defaultToDoListService.repo.GetOneById(id)
 	if err != nil {
@@ -36,22 +46,12 @@ func (defaultToDoListService DefaultToDoListService) UpdateOneListById(id string
 	return list, nil
 }
 
-func (defaultToDoListService DefaultToDoListService) SaveList(newList domain.ToDoList) (*domain.ToDoList, *errs.AppError) {
-	newList.ResetID()
-	newList.AssignTaskIDs()
-	list, err := defaultToDoListService.repo.Save(newList)
+func (defaultToDoListService DefaultToDoListService) DeleteListById(id string) *errs.AppError {
+	err := defaultToDoListService.repo.DeleteOneById(id)
 	if err != nil {
-		return nil, err
+		return err
 	}
-	return list, nil
-}
-
-func (defaultToDoListService DefaultToDoListService) DeleteList(id string) (*int64, *errs.AppError) {
-	res, err := defaultToDoListService.repo.DeleteOneById(id)
-	if err != nil {
-		return nil, err
-	}
-	return res, nil
+	return nil
 }
 
 func NewToDoListService(repo ports.ToDoListRepository) DefaultToDoListService {

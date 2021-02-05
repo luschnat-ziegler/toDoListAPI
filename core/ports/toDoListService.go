@@ -8,8 +8,8 @@ import (
 //go:generate mockgen -destination=../../mocks/ports/mockToDoListService.go -package=ports github.com/luschnat-ziegler/toDoListAPI/core/ports ToDoListService
 type ToDoListService interface {
 	GetAllLists() (*[]domain.ToDoList, *errs.AppError)
+	SaveList(domain.ToDoList) (*domain.ToDoList, *errs.AppError)
 	GetOneListById(string) (*domain.ToDoList, *errs.AppError)
 	UpdateOneListById(string, domain.ToDoList) (*domain.ToDoList, *errs.AppError)
-	SaveList(domain.ToDoList) (*domain.ToDoList, *errs.AppError)
-	DeleteList(string) (*int64, *errs.AppError)
+	DeleteListById(string) *errs.AppError
 }

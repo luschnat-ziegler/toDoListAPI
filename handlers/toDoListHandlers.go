@@ -60,18 +60,6 @@ func (ah *ToDoListHandlers) GetOne(w http.ResponseWriter, r *http.Request) {
 	writeResponse(w, http.StatusOK, getListResponse)
 }
 
-func (ah *ToDoListHandlers) Delete(w http.ResponseWriter, r *http.Request) {
-
-	id := mux.Vars(r)["id"]
-
-	_, appErr := ah.Service.DeleteList(id)
-	if appErr != nil {
-		writeResponse(w, appErr.Code, appErr.AsMessage())
-		return
-	}
-	w.WriteHeader(http.StatusNoContent)
-}
-
 func (ah *ToDoListHandlers) Update(w http.ResponseWriter, r *http.Request) {
 
 	id := mux.Vars(r)["id"]
@@ -83,6 +71,12 @@ func (ah *ToDoListHandlers) Update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	validationError := newList.Validate()
+	if validationError != nil {
+		writeResponse(w, validationError.Code, validationError.AsMessage())
+		return
+	}
+
 	updatedList, appErr := ah.Service.UpdateOneListById(id, newList)
 	if appErr != nil {
 		writeResponse(w, appErr.Code, appErr.AsMessage())
@@ -90,6 +84,18 @@ func (ah *ToDoListHandlers) Update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	writeResponse(w, http.StatusOK, updatedList)
+}
+
+func (ah *ToDoListHandlers) Delete(w http.ResponseWriter, r *http.Request) {
+
+	id := mux.Vars(r)["id"]
+
+	appErr := ah.Service.DeleteListById(id)
+	if appErr != nil {
+		writeResponse(w, appErr.Code, appErr.AsMessage())
+		return
+	}
+	w.WriteHeader(http.StatusNoContent)
 }
 
 func writeResponse(w http.ResponseWriter, code int, data interface{}) {
