@@ -2,7 +2,7 @@ package domain_test
 
 import (
 	"github.com/luschnat-ziegler/toDoListAPI/core/domain"
-	"github.com/luschnat-ziegler/toDoListAPI/mocks"
+	"github.com/luschnat-ziegler/toDoListAPI/testUtils/dummies"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"net/http"
 	"testing"
@@ -78,7 +78,7 @@ func Test_ToDoList_AssignTaskIDs_should_set_or_reset_all_task_ids_to_new_values(
 			},
 		},
 	}
-	initialIds := [2]string{"1234","2345"}
+	initialIds := [2]string{"1234", "2345"}
 
 	dummyListNonZeroTaskIds.AssignTaskIDs()
 	for i := range dummyListNonZeroTaskIds.Tasks {
@@ -115,14 +115,14 @@ func Test_ToDoList_AssignTaskIDs_should_set_or_reset_all_task_ids_to_new_values(
 }
 
 func Test_ToDoList_Validate_should_return_nil_if_provided_with_valid_list(t *testing.T) {
-	err := mocks.DummyListValid.Validate()
+	err := dummies.DummyListValid.Validate()
 	if err != nil {
 		t.Error("Expected nil, got validation error instead")
 	}
 }
 
 func Test_ToDoList_Validate_should_return_matching_validation_error_with_invalid_list(t *testing.T) {
-	err := mocks.DummyListInvalid.Validate()
+	err := dummies.DummyListInvalid.Validate()
 	if err == nil {
 		t.Error("Expected validation error, got nil instead")
 		return

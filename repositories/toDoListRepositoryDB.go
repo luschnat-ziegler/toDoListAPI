@@ -57,7 +57,7 @@ func (toDoListRepositoryDB ToDoListRepositoryDB) GetOneById(id string) (*domain.
 	objectId, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
 		logger.Error("Error parsing id: " + err.Error())
-		return nil, errs.NewInternalError("Database Error")
+		return nil, errs.NewBadRequestError("ID is invalid")
 	}
 
 	var toDoList domain.ToDoList
@@ -124,7 +124,6 @@ func (toDoListRepositoryDB ToDoListRepositoryDB) Save(newList domain.ToDoList) (
 	newList.Id = result.InsertedID.(primitive.ObjectID)
 	return &newList, nil
 }
-
 
 func (toDoListRepositoryDB ToDoListRepositoryDB) DeleteOneById(id string) *errs.AppError {
 	if err := connectDbClient(); err != nil {

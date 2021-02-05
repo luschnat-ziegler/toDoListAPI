@@ -60,18 +60,6 @@ func (ah *ToDoListHandlers) GetOne(w http.ResponseWriter, r *http.Request) {
 	writeResponse(w, http.StatusOK, getListResponse)
 }
 
-func (ah *ToDoListHandlers) Delete(w http.ResponseWriter, r *http.Request) {
-
-	id := mux.Vars(r)["id"]
-
-	appErr := ah.Service.DeleteList(id)
-	if appErr != nil {
-		writeResponse(w, appErr.Code, appErr.AsMessage())
-		return
-	}
-	w.WriteHeader(http.StatusNoContent)
-}
-
 func (ah *ToDoListHandlers) Update(w http.ResponseWriter, r *http.Request) {
 
 	id := mux.Vars(r)["id"]
@@ -96,6 +84,18 @@ func (ah *ToDoListHandlers) Update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	writeResponse(w, http.StatusOK, updatedList)
+}
+
+func (ah *ToDoListHandlers) Delete(w http.ResponseWriter, r *http.Request) {
+
+	id := mux.Vars(r)["id"]
+
+	appErr := ah.Service.DeleteListById(id)
+	if appErr != nil {
+		writeResponse(w, appErr.Code, appErr.AsMessage())
+		return
+	}
+	w.WriteHeader(http.StatusNoContent)
 }
 
 func writeResponse(w http.ResponseWriter, code int, data interface{}) {

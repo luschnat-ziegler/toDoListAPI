@@ -35,9 +35,9 @@ func (m *MockToDoListService) EXPECT() *MockToDoListServiceMockRecorder {
 }
 
 // DeleteList mocks base method
-func (m *MockToDoListService) DeleteList(arg0 string) *errs.AppError {
+func (m *MockToDoListService) DeleteListById(arg0 string) *errs.AppError {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DeleteList", arg0)
+	ret := m.ctrl.Call(m, "DeleteListById", arg0)
 	ret0, _ := ret[0].(*errs.AppError)
 	return ret0
 }
@@ -45,7 +45,7 @@ func (m *MockToDoListService) DeleteList(arg0 string) *errs.AppError {
 // DeleteList indicates an expected call of DeleteList
 func (mr *MockToDoListServiceMockRecorder) DeleteList(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteList", reflect.TypeOf((*MockToDoListService)(nil).DeleteList), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteListById", reflect.TypeOf((*MockToDoListService)(nil).DeleteListById), arg0)
 }
 
 // GetAllLists mocks base method
