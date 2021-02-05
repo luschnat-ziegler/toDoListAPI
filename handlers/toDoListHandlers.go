@@ -83,6 +83,12 @@ func (ah *ToDoListHandlers) Update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	validationError := newList.Validate()
+	if validationError != nil {
+		writeResponse(w, validationError.Code, validationError.AsMessage())
+		return
+	}
+
 	updatedList, appErr := ah.Service.UpdateOneListById(id, newList)
 	if appErr != nil {
 		writeResponse(w, appErr.Code, appErr.AsMessage())
