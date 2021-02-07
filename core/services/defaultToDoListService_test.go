@@ -1,3 +1,9 @@
+/*
+ * package: services
+ * --------------------
+ * Includes service implementation(s) (as defined in package ports)
+ */
+
 package services
 
 import (
@@ -14,6 +20,16 @@ import (
 var mockToDoListRepository *ports.MockToDoListRepository
 var defaultToDoListService ports2.ToDoListService
 
+/*
+ * function: setupToDoListServiceTest
+ * --------------------
+ * Sets up variables for tests and returns teardown function.
+ *
+ * t: a pointer to testing.T to meet test function signature requirements.
+ *
+ * Returns: a function to clean up test variables.
+ */
+
 func setupToDoListServiceTest(t *testing.T) func() {
 	ctrl := gomock.NewController(t)
 	mockToDoListRepository = ports.NewMockToDoListRepository(ctrl)
@@ -23,6 +39,16 @@ func setupToDoListServiceTest(t *testing.T) func() {
 		defer ctrl.Finish()
 	}
 }
+
+/*
+ * function: Test_DefaultToDoListService_GetAllLists_should_return_lists_returned_by_repo_method
+ * --------------------
+ * Tests if pointer to slice of domain.ToDoList from repository method is returned unmodified by service method.
+ *
+ * t: a pointer to testing.T to meet test function signature requirements.
+ *
+ * Returns: nothing
+ */
 
 func Test_DefaultToDoListService_GetAllLists_should_return_lists_returned_by_repo_method(t *testing.T) {
 	teardown := setupToDoListServiceTest(t)
@@ -43,7 +69,7 @@ func Test_DefaultToDoListService_GetAllLists_should_return_lists_returned_by_rep
 		},
 	}
 
-	mockToDoListRepository.EXPECT().GetAll().Return(&mockToDoLists, nil)
+	mockToDoListRepository.EXPECT().GetAll().Return(&mockToDoLists, nil).Times(1)
 
 	lists, err := defaultToDoListService.GetAllLists()
 
@@ -55,6 +81,16 @@ func Test_DefaultToDoListService_GetAllLists_should_return_lists_returned_by_rep
 		t.Error("Data does not match mock return")
 	}
 }
+
+/*
+ * function: Test_DefaultToDoListService_GetAllLists_should_return_error_returned_by_repo_method
+ * --------------------
+ * Tests if pointer to errs.AppError from repository method is returned unmodified by service method.
+ *
+ * t: a pointer to testing.T to meet test function signature requirements.
+ *
+ * Returns: nothing
+ */
 
 func Test_DefaultToDoListService_GetAllLists_should_return_error_returned_by_repo_method(t *testing.T) {
 	teardown := setupToDoListServiceTest(t)
@@ -74,6 +110,16 @@ func Test_DefaultToDoListService_GetAllLists_should_return_error_returned_by_rep
 		t.Error("Data does not match mock return")
 	}
 }
+
+/*
+ * function: Test_DefaultToDoListService_SaveList_should_return_list_returned_by_repo_method
+ * --------------------
+ * Tests if pointer to domain.ToDoList from repository method is returned unmodified by service method.
+ *
+ * t: a pointer to testing.T to meet test function signature requirements.
+ *
+ * Returns: nothing
+ */
 
 func Test_DefaultToDoListService_SaveList_should_return_list_returned_by_repo_method(t *testing.T) {
 	teardown := setupToDoListServiceTest(t)
@@ -104,6 +150,16 @@ func Test_DefaultToDoListService_SaveList_should_return_list_returned_by_repo_me
 		t.Error("Data does not match mock return")
 	}
 }
+
+/*
+ * function: Test_DefaultToDoListService_SaveList_should_return_error_returned_by_repo_method
+ * --------------------
+ * Tests if pointer to errs.AppError from repository method is returned unmodified by service method.
+ *
+ * t: a pointer to testing.T to meet test function signature requirements.
+ *
+ * Returns: nothing
+ */
 
 func Test_DefaultToDoListService_SaveList_should_return_error_returned_by_repo_method(t *testing.T) {
 	teardown := setupToDoListServiceTest(t)
@@ -136,6 +192,16 @@ func Test_DefaultToDoListService_SaveList_should_return_error_returned_by_repo_m
 	}
 }
 
+/*
+ * function: Test_DefaultToDoListService_GetOneListById_should_return_list_returned_by_repo_method
+ * --------------------
+ * Tests if pointer to domain.ToDoList from repository method is returned unmodified by service method.
+ *
+ * t: a pointer to testing.T to meet test function signature requirements.
+ *
+ * Returns: nothing
+ */
+
 func Test_DefaultToDoListService_GetOneListById_should_return_list_returned_by_repo_method(t *testing.T) {
 	teardown := setupToDoListServiceTest(t)
 	defer teardown()
@@ -166,12 +232,22 @@ func Test_DefaultToDoListService_GetOneListById_should_return_list_returned_by_r
 	}
 }
 
+/*
+ * function: Test_DefaultToDoListService_SaveList_should_return_error_returned_by_repo_method
+ * --------------------
+ * Tests if pointer to errs.AppError from repository method is returned unmodified by service method.
+ *
+ * t: a pointer to testing.T to meet test function signature requirements.
+ *
+ * Returns: nothing
+ */
+
 func Test_DefaultToDoListService_GetOneListById_should_return_error_returned_by_repo_method(t *testing.T) {
 	teardown := setupToDoListServiceTest(t)
 	defer teardown()
 
 	mockAppError := errs.NewInternalError("test error")
-	mockToDoListRepository.EXPECT().GetOneById("test_id").Return(nil, mockAppError)
+	mockToDoListRepository.EXPECT().GetOneById("test_id").Return(nil, mockAppError).Times(1)
 
 	_, err := defaultToDoListService.GetOneListById("test_id")
 
@@ -184,6 +260,16 @@ func Test_DefaultToDoListService_GetOneListById_should_return_error_returned_by_
 		t.Error("Data does not match mock return")
 	}
 }
+
+/*
+ * function: Test_DefaultToDoListService_UpdateOneListById_should_return_list_returned_by_repo_method
+ * --------------------
+ * Tests if pointer to domain.ToDoList from repository method is returned unmodified by service method.
+ *
+ * t: a pointer to testing.T to meet test function signature requirements.
+ *
+ * Returns: nothing
+ */
 
 func Test_DefaultToDoListService_UpdateOneListById_should_return_list_returned_by_repo_method(t *testing.T) {
 	teardown := setupToDoListServiceTest(t)
@@ -214,6 +300,16 @@ func Test_DefaultToDoListService_UpdateOneListById_should_return_list_returned_b
 		t.Error("Data does not match mock return")
 	}
 }
+
+/*
+ * function: Test_DefaultToDoListService_UpdateOneListById_should_return_error_returned_by_repo_method
+ * --------------------
+ * Tests if pointer to errs.AppError from repository method is returned unmodified by service method.
+ *
+ * t: a pointer to testing.T to meet test function signature requirements.
+ *
+ * Returns: nothing
+ */
 
 func Test_DefaultToDoListService_UpdateOneListById_should_return_error_returned_by_repo_method(t *testing.T) {
 	teardown := setupToDoListServiceTest(t)
@@ -246,6 +342,16 @@ func Test_DefaultToDoListService_UpdateOneListById_should_return_error_returned_
 	}
 }
 
+/*
+ * function: Test_DefaultToDoListService_DeleteList_should_return_nil_if_repo_method_returns_nil
+ * --------------------
+ * Tests if nil is returned by method if called repository method returns nil
+ *
+ * t: a pointer to testing.T to meet test function signature requirements.
+ *
+ * Returns: nothing
+ */
+
 func Test_DefaultToDoListService_DeleteList_should_return_nil_if_repo_method_returns_nil(t *testing.T) {
 	teardown := setupToDoListServiceTest(t)
 	defer teardown()
@@ -257,6 +363,16 @@ func Test_DefaultToDoListService_DeleteList_should_return_nil_if_repo_method_ret
 		t.Error("Error returned, nil expected")
 	}
 }
+
+/*
+ * function: Test_DefaultToDoListService_DeleteList_should_return_error_returned_by_repo_method
+ * --------------------
+ * Tests if pointer to errs.AppError from repository method is returned unmodified by service method.
+ *
+ * t: a pointer to testing.T to meet test function signature requirements.
+ *
+ * Returns: nothing
+ */
 
 func Test_DefaultToDoListService_DeleteList_should_return_error_returned_by_repo_method(t *testing.T) {
 	teardown := setupToDoListServiceTest(t)

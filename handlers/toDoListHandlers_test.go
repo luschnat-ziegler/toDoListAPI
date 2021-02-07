@@ -1,3 +1,9 @@
+/*
+ * package: handlers
+ * --------------------
+ * Includes handler function definitions.
+ */
+
 package handlers
 
 import (
@@ -16,6 +22,16 @@ var th ToDoListHandlers
 var mockDefaultToDoListService *ports.MockToDoListService
 var router *mux.Router
 
+/*
+ * function: setupToDoListHandlersTest
+ * --------------------
+ * Sets up variables for tests and returns teardown function.
+ *
+ * t: a pointer to testing.T to meet test function signature requirements.
+ *
+ * Returns: a function to clean up test variables.
+ */
+
 func setupToDoListHandlersTest(t *testing.T) func() {
 	ctrl := gomock.NewController(t)
 	mockDefaultToDoListService = ports.NewMockToDoListService(ctrl)
@@ -27,7 +43,18 @@ func setupToDoListHandlersTest(t *testing.T) func() {
 	}
 }
 
-func Test_OoListHandlers_GetAll_should_write_lists_returned_by_service_method_to_json_body(t *testing.T) {
+/*
+ * function: Test_DoListHandlers_GetAll_should_write_lists_returned_by_service_method_to_json_body
+ * --------------------
+ * Tests if method writes correct JSON to response body as well as status code 200 if service method returns
+ * pointer to slice of domain.ToDoList and nil.
+ *
+ * t: a pointer to testing.T to meet test function signature requirements.
+ *
+ * Returns: nothing
+ */
+
+func Test_ToDoListHandlers_GetAll_should_write_lists_returned_by_service_method_to_json_body(t *testing.T) {
 	teardown := setupToDoListHandlersTest(t)
 	defer teardown()
 
@@ -54,7 +81,18 @@ func Test_OoListHandlers_GetAll_should_write_lists_returned_by_service_method_to
 	}
 }
 
-func Test_OoListHandlers_GetAll_should_write_error_returned_by_service_method_to_json_body(t *testing.T) {
+/*
+ * function: Test_ToDoListHandlers_GetAll_should_write_error_returned_by_service_method_to_json_body
+ * --------------------
+ * Tests if method writes correct JSON to response body as well as corresponding status code if service method
+ * returns nil and a pointer to an errs.AppError.
+ *
+ * t: a pointer to testing.T to meet test function signature requirements.
+ *
+ * Returns: nothing
+ */
+
+func Test_ToDoListHandlers_GetAll_should_write_error_returned_by_service_method_to_json_body(t *testing.T) {
 	teardown := setupToDoListHandlersTest(t)
 	defer teardown()
 
@@ -78,7 +116,18 @@ func Test_OoListHandlers_GetAll_should_write_error_returned_by_service_method_to
 	}
 }
 
-func Test_OoListHandlers_Save_should_write_list_returned_by_service_method_to_json_body(t *testing.T) {
+/*
+ * function: Test_ToDoListHandlers_Save_should_write_list_returned_by_service_method_to_json_body
+ * --------------------
+ * Tests if method writes correct JSON to response body as well as status code 201 if service method returns
+ * pointer to domain.ToDoList and nil.
+ *
+ * t: a pointer to testing.T to meet test function signature requirements.
+ *
+ * Returns: nothing
+ */
+
+func Test_ToDoListHandlers_Save_should_write_list_returned_by_service_method_to_json_body(t *testing.T) {
 	teardown := setupToDoListHandlersTest(t)
 	defer teardown()
 
@@ -102,7 +151,18 @@ func Test_OoListHandlers_Save_should_write_list_returned_by_service_method_to_js
 	}
 }
 
-func Test_OoListHandlers_Save_should_write_error_returned_by_service_method_to_json_body(t *testing.T) {
+/*
+ * function: Test_ToDoListHandlers_Save_should_write_error_returned_by_service_method_to_json_body
+ * --------------------
+ * Tests if method writes correct JSON to response body as well as corresponding status code if service method
+ * returns nil and a pointer to an errs.AppError.
+ *
+ * t: a pointer to testing.T to meet test function signature requirements.
+ *
+ * Returns: nothing
+ */
+
+func Test_ToDoListHandlers_Save_should_write_error_returned_by_service_method_to_json_body(t *testing.T) {
 	teardown := setupToDoListHandlersTest(t)
 	defer teardown()
 
@@ -126,7 +186,18 @@ func Test_OoListHandlers_Save_should_write_error_returned_by_service_method_to_j
 	}
 }
 
-func Test_OoListHandlers_Save_should_write_error_400_to_json_body_if_JSON_invalid(t *testing.T) {
+/*
+ * function: Test_ToDoListHandlers_Save_should_write_error_400_to_json_body_if_JSON_invalid
+ * --------------------
+ * Tests if method writes correct JSON to response body as well as status code 400 if JSON in request body
+ * cannot be parsed.
+ *
+ * t: a pointer to testing.T to meet test function signature requirements.
+ *
+ * Returns: nothing
+ */
+
+func Test_ToDoListHandlers_Save_should_write_error_400_to_json_body_if_JSON_invalid(t *testing.T) {
 	teardown := setupToDoListHandlersTest(t)
 	defer teardown()
 
@@ -149,7 +220,18 @@ func Test_OoListHandlers_Save_should_write_error_400_to_json_body_if_JSON_invali
 	}
 }
 
-func Test_OoListHandlers_Save_should_write_validation_error_to_json_body_if_validation_fails(t *testing.T) {
+/*
+ * function: Test_ToDoListHandlers_Save_should_write_validation_error_to_json_body_if_validation_fails
+ * --------------------
+ * Tests if method writes correct JSON to response body as well as status code 400 if validation fails and returns
+ * an errs.ValidationError
+ *
+ * t: a pointer to testing.T to meet test function signature requirements.
+ *
+ * Returns: nothing
+ */
+
+func Test_ToDoListHandlers_Save_should_write_validation_error_to_json_body_if_validation_fails(t *testing.T) {
 	teardown := setupToDoListHandlersTest(t)
 	defer teardown()
 
@@ -172,7 +254,18 @@ func Test_OoListHandlers_Save_should_write_validation_error_to_json_body_if_vali
 	}
 }
 
-func Test_OoListHandlers_GetOne_should_write_list_returned_by_service_method_to_json_body(t *testing.T) {
+/*
+ * function: Test_ToDoListHandlers_GetOne_should_write_list_returned_by_service_method_to_json_body
+ * --------------------
+ * Tests if method writes correct JSON to response body as well as status code 200 if service method returns
+ * pointer to domain.ToDoList and nil.
+ *
+ * t: a pointer to testing.T to meet test function signature requirements.
+ *
+ * Returns: nothing
+ */
+
+func Test_ToDoListHandlers_GetOne_should_write_list_returned_by_service_method_to_json_body(t *testing.T) {
 	teardown := setupToDoListHandlersTest(t)
 	defer teardown()
 
@@ -196,7 +289,18 @@ func Test_OoListHandlers_GetOne_should_write_list_returned_by_service_method_to_
 	}
 }
 
-func Test_OoListHandlers_GetOne_should_write_error_returned_by_service_method_to_json_body(t *testing.T) {
+/*
+ * function: Test_ToDoListHandlers_GetOne_should_write_error_returned_by_service_method_to_json_body
+ * --------------------
+ * Tests if method writes correct JSON to response body as well as the correct error code if service method returns
+ * nil and a pointer to an errs.AppError
+ *
+ * t: a pointer to testing.T to meet test function signature requirements.
+ *
+ * Returns: nothing
+ */
+
+func Test_ToDoListHandlers_GetOne_should_write_error_returned_by_service_method_to_json_body(t *testing.T) {
 	teardown := setupToDoListHandlersTest(t)
 	defer teardown()
 
@@ -220,7 +324,18 @@ func Test_OoListHandlers_GetOne_should_write_error_returned_by_service_method_to
 	}
 }
 
-func Test_OoListHandlers_Update_should_write_list_returned_by_service_method_to_json_body(t *testing.T) {
+/*
+ * function: Test_ToDoListHandlers_Update_should_write_list_returned_by_service_method_to_json_body
+ * --------------------
+ * Tests if method writes correct JSON to response body as well as status code 200 if service method returns
+ * pointer to domain.ToDoList and nil.
+ *
+ * t: a pointer to testing.T to meet test function signature requirements.
+ *
+ * Returns: nothing
+ */
+
+func Test_ToDoListHandlers_Update_should_write_list_returned_by_service_method_to_json_body(t *testing.T) {
 	teardown := setupToDoListHandlersTest(t)
 	defer teardown()
 
@@ -244,7 +359,18 @@ func Test_OoListHandlers_Update_should_write_list_returned_by_service_method_to_
 	}
 }
 
-func Test_OoListHandlers_Update_should_write_error_returned_by_service_method_to_json_body(t *testing.T) {
+/*
+ * function: Test_ToDoListHandlers_Update_should_write_error_returned_by_service_method_to_json_body
+ * --------------------
+ * Tests if method writes correct JSON to response body as well as the correct error code if service method returns
+ * nil and a pointer to an errs.AppError
+ *
+ * t: a pointer to testing.T to meet test function signature requirements.
+ *
+ * Returns: nothing
+ */
+
+func Test_ToDoListHandlers_Update_should_write_error_returned_by_service_method_to_json_body(t *testing.T) {
 	teardown := setupToDoListHandlersTest(t)
 	defer teardown()
 
@@ -268,7 +394,18 @@ func Test_OoListHandlers_Update_should_write_error_returned_by_service_method_to
 	}
 }
 
-func Test_OoListHandlers_Update_should_write_error_400_to_json_body_if_JSON_invalid(t *testing.T) {
+/*
+ * function: Test_ToDoListHandlers_Update_should_write_error_400_to_json_body_if_JSON_invalid
+ * --------------------
+ * Tests if method writes correct JSON to response body as well as status code 400 if JSON in request body
+ * cannot be parsed.
+ *
+ * t: a pointer to testing.T to meet test function signature requirements.
+ *
+ * Returns: nothing
+ */
+
+func Test_ToDoListHandlers_Update_should_write_error_400_to_json_body_if_JSON_invalid(t *testing.T) {
 	teardown := setupToDoListHandlersTest(t)
 	defer teardown()
 
@@ -291,7 +428,18 @@ func Test_OoListHandlers_Update_should_write_error_400_to_json_body_if_JSON_inva
 	}
 }
 
-func Test_OoListHandlers_Update_should_write_validation_error_to_json_body_if_validation_fails(t *testing.T) {
+/*
+ * function: Test_ToDoListHandlers_Update_should_write_validation_error_to_json_body_if_validation_fails
+ * --------------------
+ * Tests if method writes correct JSON to response body as well as status code 400 if validation fails and returns
+ * an errs.ValidationError
+ *
+ * t: a pointer to testing.T to meet test function signature requirements.
+ *
+ * Returns: nothing
+ */
+
+func Test_ToDoListHandlers_Update_should_write_validation_error_to_json_body_if_validation_fails(t *testing.T) {
 	teardown := setupToDoListHandlersTest(t)
 	defer teardown()
 
@@ -314,7 +462,17 @@ func Test_OoListHandlers_Update_should_write_validation_error_to_json_body_if_va
 	}
 }
 
-func Test_OoListHandlers_Delete_should_write_204_if_service_method_returns_no_error(t *testing.T) {
+/*
+ * function: Test_ToDoListHandlers_Delete_should_write_204_if_service_method_returns_no_error
+ * --------------------
+ * Tests if method writes code 204 to response header if service method returns nil.
+ *
+ * t: a pointer to testing.T to meet test function signature requirements.
+ *
+ * Returns: nothing
+ */
+
+func Test_ToDoListHandlers_Delete_should_write_204_if_service_method_returns_no_error(t *testing.T) {
 	teardown := setupToDoListHandlersTest(t)
 	defer teardown()
 
@@ -331,7 +489,18 @@ func Test_OoListHandlers_Delete_should_write_204_if_service_method_returns_no_er
 	}
 }
 
-func Test_OoListHandlers_Delete_should_write_error_returned_by_service(t *testing.T) {
+/*
+ * function: Test_ToDoListHandlers_Delete_should_write_error_returned_by_service
+ * --------------------
+ * Tests if method writes correct JSON to response body as well as the correct error code if service method returns
+ * nil and a pointer to an errs.AppError
+ *
+ * t: a pointer to testing.T to meet test function signature requirements.
+ *
+ * Returns: nothing
+ */
+
+func Test_ToDoListHandlers_Delete_should_write_error_returned_by_service(t *testing.T) {
 	teardown := setupToDoListHandlersTest(t)
 	defer teardown()
 

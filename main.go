@@ -6,6 +6,14 @@ import (
 	"github.com/luschnat-ziegler/toDoListAPI/server"
 )
 
+/*
+ * function: init
+ * --------------------
+ * Loads .env file
+ *
+ * returns: nothing
+ */
+
 func init() {
 	if err := godotenv.Load(); err != nil {
 		logger.Error("No .env file found")
