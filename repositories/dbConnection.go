@@ -39,7 +39,8 @@ func connectDbClient() error {
 	url, _ := os.LookupEnv("DB_URL")
 	ctx, cancel = context.WithTimeout(context.Background(), 5*time.Second)
 
-	client, clientError := mongo.Connect(ctx, options.Client().ApplyURI(url))
+	var clientError error
+	client, clientError = mongo.Connect(ctx, options.Client().ApplyURI(url))
 	if clientError != nil {
 		logger.Error("Database init error: " + clientError.Error())
 		return clientError
