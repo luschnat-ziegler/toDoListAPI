@@ -63,7 +63,7 @@ func Test_ToDoListHandlers_GetAll_should_write_lists_returned_by_service_method_
 	dummyLists := []domain.ToDoList{
 		dummies.DummyListValid,
 	}
-	mockDefaultToDoListService.EXPECT().GetAllLists().Return(&dummyLists, nil)
+	mockDefaultToDoListService.EXPECT().GetAllLists().Return(&dummyLists, nil).Times(1)
 
 	request, _ := http.NewRequest(http.MethodGet, "/todos", nil)
 	recorder := httptest.NewRecorder()
@@ -97,7 +97,7 @@ func Test_ToDoListHandlers_GetAll_should_write_error_returned_by_service_method_
 	defer teardown()
 
 	router.HandleFunc("/todos", th.GetAll)
-	mockDefaultToDoListService.EXPECT().GetAllLists().Return(nil, dummies.DummyInternalError)
+	mockDefaultToDoListService.EXPECT().GetAllLists().Return(nil, dummies.DummyInternalError).Times(1)
 
 	request, _ := http.NewRequest(http.MethodGet, "/todos", nil)
 	recorder := httptest.NewRecorder()
@@ -132,7 +132,7 @@ func Test_ToDoListHandlers_Save_should_write_list_returned_by_service_method_to_
 	defer teardown()
 
 	router.HandleFunc("/todos", th.Save)
-	mockDefaultToDoListService.EXPECT().SaveList(dummies.DummyListValid).Return(&dummies.DummyListValidWithIds, nil)
+	mockDefaultToDoListService.EXPECT().SaveList(dummies.DummyListValid).Return(&dummies.DummyListValidWithIds, nil).Times(1)
 
 	request, _ := http.NewRequest(http.MethodPost, "/todos", bytes.NewBuffer([]byte(dummies.DummyValidSaveListRequestAsJSON)))
 	recorder := httptest.NewRecorder()
@@ -167,7 +167,7 @@ func Test_ToDoListHandlers_Save_should_write_error_returned_by_service_method_to
 	defer teardown()
 
 	router.HandleFunc("/todos", th.Save)
-	mockDefaultToDoListService.EXPECT().SaveList(dummies.DummyListValid).Return(nil, dummies.DummyInternalError)
+	mockDefaultToDoListService.EXPECT().SaveList(dummies.DummyListValid).Return(nil, dummies.DummyInternalError).Times(1)
 
 	request, _ := http.NewRequest(http.MethodPost, "/todos", bytes.NewBuffer([]byte(dummies.DummyValidSaveListRequestAsJSON)))
 	recorder := httptest.NewRecorder()
@@ -270,7 +270,7 @@ func Test_ToDoListHandlers_GetOne_should_write_list_returned_by_service_method_t
 	defer teardown()
 
 	router.HandleFunc("/todos/{id}", th.GetOne)
-	mockDefaultToDoListService.EXPECT().GetOneListById("test_id").Return(&dummies.DummyListValidWithIds, nil)
+	mockDefaultToDoListService.EXPECT().GetOneListById("test_id").Return(&dummies.DummyListValidWithIds, nil).Times(1)
 
 	request, _ := http.NewRequest(http.MethodGet, "/todos/test_id", nil)
 	recorder := httptest.NewRecorder()
@@ -305,7 +305,7 @@ func Test_ToDoListHandlers_GetOne_should_write_error_returned_by_service_method_
 	defer teardown()
 
 	router.HandleFunc("/todos/{id}", th.GetOne)
-	mockDefaultToDoListService.EXPECT().GetOneListById("test_id").Return(nil, dummies.DummyInternalError)
+	mockDefaultToDoListService.EXPECT().GetOneListById("test_id").Return(nil, dummies.DummyInternalError).Times(1)
 
 	request, _ := http.NewRequest(http.MethodGet, "/todos/test_id", nil)
 	recorder := httptest.NewRecorder()
@@ -340,9 +340,14 @@ func Test_ToDoListHandlers_Update_should_write_list_returned_by_service_method_t
 	defer teardown()
 
 	router.HandleFunc("/todos/{id}", th.Update)
-	mockDefaultToDoListService.EXPECT().UpdateOneListById("test_id", dummies.DummyListValid).Return(&dummies.DummyListValidWithIds, nil)
+	mockDefaultToDoListService.EXPECT().UpdateOneListById("test_id", dummies.DummyListValid).
+		Return(&dummies.DummyListValidWithIds, nil).
+		Times(1)
 
-	request, _ := http.NewRequest(http.MethodPut, "/todos/test_id", bytes.NewBuffer([]byte(dummies.DummyValidSaveListRequestAsJSON)))
+	request, _ := http.NewRequest(
+		http.MethodPut, "/todos/test_id",
+		bytes.NewBuffer([]byte(dummies.DummyValidSaveListRequestAsJSON)),
+	)
 	recorder := httptest.NewRecorder()
 
 	router.ServeHTTP(recorder, request)
@@ -375,9 +380,14 @@ func Test_ToDoListHandlers_Update_should_write_error_returned_by_service_method_
 	defer teardown()
 
 	router.HandleFunc("/todos/{id}", th.Update)
-	mockDefaultToDoListService.EXPECT().UpdateOneListById("test_id", dummies.DummyListValid).Return(nil, dummies.DummyInternalError)
+	mockDefaultToDoListService.EXPECT().UpdateOneListById("test_id", dummies.DummyListValid).
+		Return(nil, dummies.DummyInternalError).
+		Times(1)
 
-	request, _ := http.NewRequest(http.MethodPut, "/todos/test_id", bytes.NewBuffer([]byte(dummies.DummyValidSaveListRequestAsJSON)))
+	request, _ := http.NewRequest(http.MethodPut,
+		"/todos/test_id",
+		bytes.NewBuffer([]byte(dummies.DummyValidSaveListRequestAsJSON)),
+	)
 	recorder := httptest.NewRecorder()
 
 	router.ServeHTTP(recorder, request)
@@ -411,7 +421,11 @@ func Test_ToDoListHandlers_Update_should_write_error_400_to_json_body_if_JSON_in
 
 	router.HandleFunc("/todos/{id}", th.Update)
 
-	request, _ := http.NewRequest(http.MethodPut, "/todos/test_id", bytes.NewBuffer([]byte(dummies.DummyRequestInvalidJSON)))
+	request, _ := http.NewRequest(
+		http.MethodPut,
+		"/todos/test_id",
+		bytes.NewBuffer([]byte(dummies.DummyRequestInvalidJSON)),
+	)
 	recorder := httptest.NewRecorder()
 
 	router.ServeHTTP(recorder, request)
@@ -445,7 +459,10 @@ func Test_ToDoListHandlers_Update_should_write_validation_error_to_json_body_if_
 
 	router.HandleFunc("/todos/{id}", th.Update)
 
-	request, _ := http.NewRequest(http.MethodPut, "/todos/test_id", bytes.NewBuffer([]byte(dummies.DummyInvalidSaveListRequestAsJSON)))
+	request, _ := http.NewRequest(http.MethodPut,
+		"/todos/test_id",
+		bytes.NewBuffer([]byte(dummies.DummyInvalidSaveListRequestAsJSON)),
+	)
 	recorder := httptest.NewRecorder()
 
 	router.ServeHTTP(recorder, request)
@@ -477,7 +494,7 @@ func Test_ToDoListHandlers_Delete_should_write_204_if_service_method_returns_no_
 	defer teardown()
 
 	router.HandleFunc("/todos/{id}", th.Delete)
-	mockDefaultToDoListService.EXPECT().DeleteList("test_id").Return(nil)
+	mockDefaultToDoListService.EXPECT().DeleteList("test_id").Return(nil).Times(1)
 
 	request, _ := http.NewRequest(http.MethodDelete, "/todos/test_id", nil)
 	recorder := httptest.NewRecorder()
@@ -505,7 +522,9 @@ func Test_ToDoListHandlers_Delete_should_write_error_returned_by_service(t *test
 	defer teardown()
 
 	router.HandleFunc("/todos/{id}", th.Delete)
-	mockDefaultToDoListService.EXPECT().DeleteList("test_id").Return(dummies.DummyInternalError)
+	mockDefaultToDoListService.EXPECT().DeleteList("test_id").
+		Return(dummies.DummyInternalError).
+		Times(1)
 
 	request, _ := http.NewRequest(http.MethodDelete, "/todos/test_id", nil)
 	recorder := httptest.NewRecorder()

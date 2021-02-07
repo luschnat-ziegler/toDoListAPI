@@ -4,7 +4,6 @@
  * Includes handler function definitions.
  */
 
-
 package handlers
 
 import (
@@ -90,7 +89,7 @@ func (ah *ToDoListHandlers) Save(w http.ResponseWriter, r *http.Request) {
  * w, r: an http.ResponseWriter and a pointer to an http.Request needed to meet the handler function signature.
  *
  * returns: nothing
-*/
+ */
 
 func (ah *ToDoListHandlers) GetOne(w http.ResponseWriter, r *http.Request) {
 

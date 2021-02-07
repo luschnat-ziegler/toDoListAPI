@@ -97,7 +97,7 @@ func Test_DefaultToDoListService_GetAllLists_should_return_error_returned_by_rep
 	defer teardown()
 
 	mockAppError := errs.NewInternalError("test error")
-	mockToDoListRepository.EXPECT().GetAll().Return(nil, mockAppError)
+	mockToDoListRepository.EXPECT().GetAll().Return(nil, mockAppError).Times(1)
 
 	_, err := defaultToDoListService.GetAllLists()
 
@@ -138,7 +138,7 @@ func Test_DefaultToDoListService_SaveList_should_return_list_returned_by_repo_me
 		},
 	}
 
-	mockToDoListRepository.EXPECT().Save(mockToDoList).Return(&mockToDoList, nil)
+	mockToDoListRepository.EXPECT().Save(mockToDoList).Return(&mockToDoList, nil).Times(1)
 
 	list, err := defaultToDoListService.SaveList(mockToDoList)
 
@@ -178,7 +178,7 @@ func Test_DefaultToDoListService_SaveList_should_return_error_returned_by_repo_m
 		},
 	}
 	mockAppError := errs.NewInternalError("test error")
-	mockToDoListRepository.EXPECT().Save(mockToDoList).Return(nil, mockAppError)
+	mockToDoListRepository.EXPECT().Save(mockToDoList).Return(nil, mockAppError).Times(1)
 
 	_, err := defaultToDoListService.SaveList(mockToDoList)
 
@@ -219,7 +219,7 @@ func Test_DefaultToDoListService_GetOneListById_should_return_list_returned_by_r
 		},
 	}
 
-	mockToDoListRepository.EXPECT().GetOneById("test_id").Return(&mockToDoList, nil)
+	mockToDoListRepository.EXPECT().GetOneById("test_id").Return(&mockToDoList, nil).Times(1)
 
 	list, err := defaultToDoListService.GetOneListById("test_id")
 
@@ -288,7 +288,9 @@ func Test_DefaultToDoListService_UpdateOneListById_should_return_list_returned_b
 		},
 	}
 
-	mockToDoListRepository.EXPECT().UpdateOneById("test_id", mockToDoList).Return(&mockToDoList, nil)
+	mockToDoListRepository.EXPECT().UpdateOneById("test_id", mockToDoList).
+		Return(&mockToDoList, nil).
+		Times(1)
 
 	list, err := defaultToDoListService.UpdateOneListById("test_id", mockToDoList)
 
@@ -328,7 +330,9 @@ func Test_DefaultToDoListService_UpdateOneListById_should_return_error_returned_
 		},
 	}
 	mockAppError := errs.NewInternalError("test error")
-	mockToDoListRepository.EXPECT().UpdateOneById("test_id", mockToDoList).Return(nil, mockAppError)
+	mockToDoListRepository.EXPECT().UpdateOneById("test_id", mockToDoList).
+		Return(nil, mockAppError).
+		Times(1)
 
 	_, err := defaultToDoListService.UpdateOneListById("test_id", mockToDoList)
 
@@ -356,7 +360,7 @@ func Test_DefaultToDoListService_DeleteList_should_return_nil_if_repo_method_ret
 	teardown := setupToDoListServiceTest(t)
 	defer teardown()
 
-	mockToDoListRepository.EXPECT().DeleteOneById("test_id").Return(nil)
+	mockToDoListRepository.EXPECT().DeleteOneById("test_id").Return(nil).Times(1)
 	err := defaultToDoListService.DeleteListById("test_id")
 
 	if err != nil {
@@ -379,7 +383,7 @@ func Test_DefaultToDoListService_DeleteList_should_return_error_returned_by_repo
 	defer teardown()
 
 	mockAppError := errs.NewInternalError("test error")
-	mockToDoListRepository.EXPECT().DeleteOneById("test_id").Return(mockAppError)
+	mockToDoListRepository.EXPECT().DeleteOneById("test_id").Return(mockAppError).Times(1)
 	err := defaultToDoListService.DeleteListById("test_id")
 
 	if err == nil {
