@@ -1,3 +1,9 @@
+/*
+ * package: repositories
+ * --------------------
+ * Includes repository implementation(s) (as defined in ports)
+ */
+
 package repositories
 
 import (
@@ -12,7 +18,6 @@ import (
 var client *mongo.Client
 var ctx context.Context
 var cancel context.CancelFunc
-var clientError error
 var collection *mongo.Collection
 
 const (
@@ -20,11 +25,21 @@ const (
 	collectionName = "lists"
 )
 
+/*
+ * Function: connectDbClient
+ * --------------------
+ * Initiates a connection to mongoDB and sets the collection to the provided collectionName. Also instantiates a
+ * context.Context (5s timeout) to be used with the client, as well as the respective context.CancelFunc.
+ *
+ * returns: An error or nil
+ */
+
 func connectDbClient() error {
 
 	url, _ := os.LookupEnv("DB_URL")
 	ctx, cancel = context.WithTimeout(context.Background(), 5*time.Second)
 
+	var clientError error
 	client, clientError = mongo.Connect(ctx, options.Client().ApplyURI(url))
 	if clientError != nil {
 		logger.Error("Database init error: " + clientError.Error())
@@ -35,6 +50,17 @@ func connectDbClient() error {
 
 	return nil
 }
+
+/*
+ * Function: disconnectClient
+ * --------------------
+ * Disconnects a mongo.Client.
+ *
+ * client: a pointer to the mongo.Client to be disconnected
+ * ctx: a context.Context used with the client
+ *
+ * returns: nothing
+ */
 
 func disconnectClient(client *mongo.Client, ctx context.Context) {
 	err := client.Disconnect(ctx)

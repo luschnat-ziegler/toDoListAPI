@@ -1,3 +1,9 @@
+/*
+ * package: ports
+ * --------------------
+ * Includes interface definitions for layer connections (services and repositories).
+ */
+
 package ports
 
 import (

@@ -1,3 +1,10 @@
+/*
+ * Package: domain_test
+ * --------------------
+ * Includes test of domain model type methods.
+ * Note: Excluded from package domain in order to prevent circular imports.
+ */
+
 package domain_test
 
 import (
@@ -7,6 +14,14 @@ import (
 	"net/http"
 	"testing"
 )
+
+/*
+ * Function: Test_ToDoList_ResetID_should_set_or_reset_ID_to_zero_value
+ * --------------------
+ * Tests functionality of ToDoList.ResetID by checking if zero value is inserted in field id of dummies.
+ *
+ * t: a pointer to testing.T to meet test function signature requirements.
+ */
 
 func Test_ToDoList_ResetID_should_set_or_reset_ID_to_zero_value(t *testing.T) {
 
@@ -58,6 +73,15 @@ func Test_ToDoList_ResetID_should_set_or_reset_ID_to_zero_value(t *testing.T) {
 		t.Error("Id does not match zero value")
 	}
 }
+
+/*
+ * Function: Test_ToDoList_AssignTaskIDs_should_set_or_reset_all_task_ids_to_new_values
+ * --------------------
+ * Tests functionality of ToDoList.AssignTaskIDs by checking if new ids are inserted in field id of
+ * dummies' slice of domain.Task.
+ *
+ * t: a pointer to testing.T to meet test function signature requirements.
+ */
 
 func Test_ToDoList_AssignTaskIDs_should_set_or_reset_all_task_ids_to_new_values(t *testing.T) {
 
@@ -114,12 +138,29 @@ func Test_ToDoList_AssignTaskIDs_should_set_or_reset_all_task_ids_to_new_values(
 	}
 }
 
+/*
+ * Function: Test_ToDoList_Validate_should_return_nil_if_provided_with_valid_list
+ * --------------------
+ * Tests functionality of ToDoList.Validate by calling method on valid dummy list.
+ *
+ * t: a pointer to testing.T to meet test function signature requirements.
+ */
+
 func Test_ToDoList_Validate_should_return_nil_if_provided_with_valid_list(t *testing.T) {
 	err := dummies.DummyListValid.Validate()
 	if err != nil {
 		t.Error("Expected nil, got validation error instead")
 	}
 }
+
+/*
+ * Function: Test_ToDoList_Validate_should_return_matching_validation_error_with_invalid_list
+ * --------------------
+ * Tests functionality of ToDoList.Validate by calling method on invalid dummy list and comparing
+ * the resulting errs.ValidationErrors field with the correct values
+ *
+ * t: a pointer to testing.T to meet test function signature requirements.
+ */
 
 func Test_ToDoList_Validate_should_return_matching_validation_error_with_invalid_list(t *testing.T) {
 	err := dummies.DummyListInvalid.Validate()

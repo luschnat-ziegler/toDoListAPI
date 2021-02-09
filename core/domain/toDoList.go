@@ -1,3 +1,10 @@
+/*
+ * package: domain
+ * --------------------
+ * Includes definitions of types representing the domain model.
+ * Also includes methods defined upon these types.
+ */
+
 package domain
 
 import (
@@ -22,15 +29,44 @@ type Task struct {
 	Description *string `json:"description" bson:"description"`
 }
 
+/*
+ * Method: toDoList.AssignTaskIDs
+ * --------------------
+ * Assigns new, unique ids (uuid) to every Task in the ToDOList.
+ * All existing Task ids will be overwritten.
+ * Modifies the ToDoList it is applied to (pointer receiver)
+ */
+
 func (toDoList *ToDoList) AssignTaskIDs() {
 	for i := range toDoList.Tasks {
 		toDoList.Tasks[i].Id = uuid.NewString()
 	}
 }
 
+/*
+ * Method: toDoList.ResetID
+ * --------------------
+ * Resets id (primitive.ObjectID) to the zero value (ObjectID(000000000000000000000000)).
+ * An existing id will be overwritten.
+ * Modifies the ToDoList it is applied to (pointer receiver).
+ *
+ * returns: none
+ */
+
 func (toDoList *ToDoList) ResetID() {
 	toDoList.Id = primitive.ObjectID{}
 }
+
+/*
+ * Method: toDoList.Validate
+ * --------------------
+ * Validates the ToDoList using github.com/go-playground/validator/v10
+ * Rules are defined in the tags provided in the ToDoList type definition.
+ *
+ * returns: a pointer to an errs.ValidationError with invalid fields
+ *          and their respective violations in case of failed validation.
+ *          Otherwise, on successful validation, nil is returned.
+ */
 
 func (toDoList ToDoList) Validate() *errs.ValidationError {
 	v := validator.New()
