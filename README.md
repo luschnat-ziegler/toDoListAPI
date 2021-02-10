@@ -2,15 +2,6 @@
 
 ## Setup Instructions
 
-### MongoDB 
-
-The lists are persisted using mongoDB Atlas (Local instances of mongoDB will work, as well).
-In order to connect to your own mongoDB Atlas cluster, add a .env file in the root directory of your repository and insert your connection url as `DB_URL`. Example:
-
-`DB_URL=mongodb+srv://abc:<password>@cluster0.z1fxp.mongodb.net/<dbname>?retryWrites=true&w=majority`
-
-where "dbname" should be set to "todo". The database and the collection "lists" will be created on first insert.
-
 ### Run or build
 
 Install the Go binaries, following the instructions on [golang.org](https://golang.org/dl/).
@@ -21,6 +12,21 @@ Run the application: `go run main.go`
 Build the application: `go build`
 
 The server is set up to run on `http://localhost:8000`. 
+
+### MongoDB setup
+
+The lists are persisted using mongoDB.
+
+In order to connect to your own mongoDB instance create a `.env` file in the root directory of your repo and add the entry `DB_URL`.
+If mongoDB Atlas is used, the entry should look like this ("dbname" must be set to "todo"):
+
+`DB_URL=mongodb+srv://abc:<password>@cluster0.z1fxp.mongodb.net/<dbname>?retryWrites=true&w=majority`
+
+If a local instance of mongoDB is used, the entry should look like this (if another port is used, it has to be specified):
+
+`DB_URL=mongodb://localhost:27017`
+
+Regardless of whether Atlas or a local instance is used, the database and the collection "lists" will be created on first insert.
 
 ### API
 
