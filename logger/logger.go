@@ -27,22 +27,6 @@ func init() {
 }
 
 /*
- * Function: Fatal
- * --------------------
- * Creates a Fatal log output using the initiated logger instance
- * Terminates the program by calling os.Exit(1)
- *
- * message: A string with logging info
- * fields: Any number of zap.Field
- *
- * returns: nothing
- */
-
-func Fatal(message string, fields ...zap.Field) {
-	log.Fatal(message, fields...)
-}
-
-/*
  * Function: Info
  * --------------------
  * Creates an Info log output using the initiated logger instance

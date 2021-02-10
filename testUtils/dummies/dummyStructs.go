@@ -1,3 +1,9 @@
+/*
+ * package: dummies
+ * --------------------
+ * Provides dummy data for unit testing
+ */
+
 package dummies
 
 import (

@@ -34,6 +34,7 @@ func Start() {
 		th := handlers.ToDoListHandlers{Service: services.NewToDoListService(toDoListRepositoryDB)}
 
 		router := mux.NewRouter()
+		router.HandleFunc("/", handlers.GetInfo).Methods(http.MethodGet)
 		router.HandleFunc("/todos", th.GetAll).Methods(http.MethodGet)
 		router.HandleFunc("/todos", th.Save).Methods(http.MethodPost)
 		router.HandleFunc("/todos/{id}", th.GetOne).Methods(http.MethodGet)
