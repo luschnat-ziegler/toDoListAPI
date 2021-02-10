@@ -12,6 +12,7 @@ import (
 	"github.com/luschnat-ziegler/toDoListAPI/logger"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 type ToDoListRepositoryDB struct{}
@@ -90,8 +91,11 @@ func (toDoListRepositoryDB ToDoListRepositoryDB) GetOneById(id string) (*domain.
 
 	err = collection.FindOne(ctx, bson.M{"_id": objectId}).Decode(&toDoList)
 	if err != nil {
-		logger.Error("Error querying database: " + err.Error())
-		return nil, errs.NewInternalError("Database Error")
+		if err == mongo.ErrNoDocuments {
+			return nil, errs.NewNotFoundError("No documents matching id " + id)
+		} else {
+			return nil, errs.NewInternalError("Database error")
+		}
 	}
 	return &toDoList, nil
 }
