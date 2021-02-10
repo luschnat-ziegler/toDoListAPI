@@ -8,6 +8,16 @@ package handlers
 
 import "net/http"
 
+/*
+ * Function: GetInfo
+ * --------------------
+ * To be called for requests at root. Writes response with API info.
+ *
+ * w, _: an http.ResponseWriter and a pointer to an http.Request needed to meet the handler function signature.
+ *
+ * returns: nothing
+ */
+
 func GetInfo(w http.ResponseWriter, _ *http.Request) {
 
 	apiInfo := map[string]string{
